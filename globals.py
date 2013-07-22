@@ -13,6 +13,7 @@ black = 0, 0, 0
 white = 255, 255, 255
 red = 255, 0, 0
 orange = 255, 128, 0
+yellow = 255, 255, 0
 
 # PLAYER
 p_size_diff = 0.7
@@ -25,6 +26,11 @@ b_size = int(square_size * b_size_diff)
 # EXPLOSION
 e_size_diff = 0.3
 e_size = int(square_size * e_size_diff)
+
+# POWERUPS
+change = 0.05
+pw_size_diff = 0.5
+pw_size = int(square_size * pw_size_diff)
 
 ##############################################################################
 #                               GAME VARIABLES                               #
@@ -47,6 +53,7 @@ display = None
 squares = []  # matrix with the board squares
 bombs = []  # list of all the bombs on the map
 explosions = []  # list of all explosions on the map
+powerups = []
 
 # OTHER
 clock = None

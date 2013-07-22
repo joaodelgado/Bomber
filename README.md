@@ -16,7 +16,7 @@ Commands:
         Arrow keys to move
         P to place a bomb
 
-To run just run:
+To play just run:
 
     python bomberwar.py
 

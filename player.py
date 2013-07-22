@@ -13,6 +13,7 @@ class Player(object):
         self.inverted_color = inverted_color
         self.i = i
         self.j = j
+        self.bomb_radious = 2
         if player_number == 1:
             self.up = K_w
             self.down = K_s

@@ -35,9 +35,7 @@ def update():
 ##############################################################################
 def render():
     globals.screen.fill(globals.black)
-
     globals.game_state.render()
-
     pygame.display.flip()
 
 

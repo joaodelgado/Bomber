@@ -1,5 +1,9 @@
 import pygame
+import random
+
 import globals
+
+from powerup import Powerup
 
 
 class Square(pygame.Rect):
@@ -15,6 +19,8 @@ class Square(pygame.Rect):
             globals.square_size)
 
     def change_owner(self, owner):
+        if random.random() < globals.change:
+            globals.powerups.append(Powerup(self.i, self.j))
         self.owner = owner
         self.color = owner.inverted_color
 

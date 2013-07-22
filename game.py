@@ -8,6 +8,8 @@ from square import Square
 
 class Game(object):
     def __init__(self):
+        del globals.squares[0:len(globals.squares)]
+
         self.p1 = Player(4, 4, globals.white, globals.black, 1)
         self.p2 = Player(14, 4, globals.black, globals.white, 2)
 
@@ -21,6 +23,10 @@ class Game(object):
             for square in column:
                 square.change_owner(self.p1)
 
+        del globals.bombs[0:len(globals.bombs)]
+        del globals.explosions[0:len(globals.explosions)]
+        del globals.powerups[0:len(globals.powerups)]
+
     def update_event(self, event):
         if event.type == QUIT:
             globals.game_state_label = globals.EXIT
@@ -29,6 +35,15 @@ class Game(object):
             self.p2.update(event)
 
     def update(self):
+        for powerup in globals.powerups:
+            powerup.update()
+            if powerup.i == self.p1.i and \
+               powerup.j == self.p1.j:
+                powerup.pickup(self.p1)
+            if powerup.i == self.p2.i and \
+               powerup.j == self.p2.j:
+                powerup.pickup(self.p2)
+
         for bomb in globals.bombs:
             bomb.update()
 
@@ -47,11 +62,12 @@ class Game(object):
             globals.game_state_label = globals.MAIN_MENU
 
     def render(self):
-        globals.screen.fill(globals.black)
-
         for line in globals.squares:
             for rect in line:
                 rect.render()
+
+        for powerup in globals.powerups:
+            powerup.render()
 
         for bomb in globals.bombs:
             bomb.render()

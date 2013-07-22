@@ -13,7 +13,6 @@ class Bomb(pygame.Rect):
         self.j = j
         self.player = player
         self.timer = 2000
-        self.radious = 2
         self.color = globals.red
         super(Bomb, self).__init__(
             utils.index_to_pixel(self.i) - globals.b_size/2,
@@ -27,15 +26,18 @@ class Bomb(pygame.Rect):
             self.explode()
 
     def explode(self):
+        # rewrite for loops
         for i in range(
-                max(0, int(self.i - self.radious)),
-                min(globals.squares_per_line, int(self.i+1 + self.radious))):
+                max(0, int(self.i - self.player.bomb_radious)),
+                min(globals.squares_per_line,
+                    int(self.i+1 + self.player.bomb_radious))):
             for j in range(
-                    max(0, int(self.j - self.radious)),
-                    min(globals.squares_per_line, int(self.j+1 + self.radious))):
+                    max(0, int(self.j - self.player.bomb_radious)),
+                    min(globals.squares_per_line,
+                        int(self.j+1 + self.player.bomb_radious))):
                 center = (self.i, self.j)
                 square = (i, j)
-                if utils.distance(center, square) <= self.radious:
+                if utils.distance(center, square) <= self.player.bomb_radious:
                     globals.explosions.append(Explosion(i, j))
                     if globals.squares[i][j].owner != self.player:
                         globals.squares[i][j].change_owner(self.player)

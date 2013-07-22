@@ -1,5 +1,6 @@
-import globals
 from math import sqrt, pow
+
+import globals
 
 
 def index_to_pixel(i):

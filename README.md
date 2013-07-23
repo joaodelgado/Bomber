@@ -1,10 +1,10 @@
-BomberWar
+Bomber
 =========
 
 My attempt to make a game in python, using [pygame modules](http://pygame.org).
 The game is heavily inspired by the awesome free game [Bomberjam](http://iamclaw.com/?page_id=235).
 
-BomberWar is a two player game where each player has to conquer territory, by placing bombs, until the opponent is trapped.
+Bomber is a two player game where each player has to conquer territory, by placing bombs, until the opponent is trapped.
 
 Commands:
 
@@ -18,6 +18,6 @@ Commands:
 
 To play just run:
 
-    python bomberwar.py
+    python bomber.py
 
 *[Python 2.7](http://www.python.org/) and [Pygame](http://pygame.org) are required.

@@ -18,7 +18,8 @@ def pixel_to_index(p):
         Since the board is square, only one coordinate is necessary
         as it can be used equally in both axis
     '''
-    return int(p/globals.square_size)
+    index = int(p/globals.square_size)
+    return max(0, min(index, globals.squares_per_line))
 
 
 def distance((x1, y1), (x2, y2)):

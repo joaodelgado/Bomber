@@ -30,11 +30,14 @@ class Game(object):
     def update_event(self, event):
         if event.type == QUIT:
             globals.game_state_label = globals.EXIT
-        elif event.type == KEYDOWN:
-            self.p1.update(event)
-            self.p2.update(event)
+
+        self.p1.update_event(event)
+        self.p2.update_event(event)
 
     def update(self):
+        self.p1.update()
+        self.p2.update()
+
         for powerup in globals.powerups:
             powerup.update()
             if powerup.i == self.p1.i and \

@@ -101,22 +101,6 @@ class Player(object):
         right = x + globals.p_radious
         top = y - globals.p_radious
         bottom = y + globals.p_radious
-
-        #window borders
-        if left < 0:
-            x = globals.p_radious
-        elif right > globals.width:
-            x = globals.width - globals.p_radious - 1
-        if top <= 0:
-            y = globals.p_radious
-        elif bottom > globals.height:
-            y = globals.height - globals.p_radious - 1
-
-        # need to recalculate variables, in case something changed
-        left = x - globals.p_radious
-        right = x + globals.p_radious
-        top = y - globals.p_radious
-        bottom = y + globals.p_radious
         index_x = utils.pixel_to_index(x)
         index_y = utils.pixel_to_index(y)
         index_left = utils.pixel_to_index(left)
@@ -137,6 +121,22 @@ class Player(object):
         elif globals.squares[index_x][index_bottom].owner != self:
             y = globals.square_size * index_bottom - \
                 globals.p_radious
+
+        #recalculate variables
+        left = x - globals.p_radious
+        right = x + globals.p_radious
+        top = y - globals.p_radious
+        bottom = y + globals.p_radious
+
+        #window borders
+        if left < 0:
+            x = globals.p_radious
+        elif right >= globals.width:
+            x = globals.width - globals.p_radious - 1
+        if top < 0:
+            y = globals.p_radious
+        elif bottom >= globals.height:
+            y = globals.height - globals.p_radious - 1
 
         self.center = [
             x,

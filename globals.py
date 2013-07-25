@@ -14,6 +14,8 @@ white = 255, 255, 255
 red = 255, 0, 0
 orange = 255, 128, 0
 yellow = 255, 255, 0
+green = 0, 255, 0
+brown = 128, 64, 0
 
 # PLAYER
 p_size_diff = 0.7

@@ -54,14 +54,20 @@ class Game(object):
             explosion.update()
             # checks if a player was hit by an explosion
             if explosion.i == self.p1.i and \
-               explosion.j == self.p1.j or  \
-               explosion.i == self.p2.i and \
+               explosion.j == self.p1.j:
+                print "Player 2 won"
+                globals.game_state_label = globals.MAIN_MENU
+            if explosion.i == self.p2.i and \
                explosion.j == self.p2.j:
+                print "Player 1 won"
                 globals.game_state_label = globals.MAIN_MENU
 
         # checks if a player is in a square that he doesn't own
-        if globals.squares[self.p1.i][self.p1.j].owner != self.p1 or \
-           globals.squares[self.p2.i][self.p2.j].owner != self.p2:
+        if globals.squares[self.p1.i][self.p1.j].owner != self.p1:
+            print "Player 2 won"
+            globals.game_state_label = globals.MAIN_MENU
+        if globals.squares[self.p2.i][self.p2.j].owner != self.p2:
+            print "Player 1 won"
             globals.game_state_label = globals.MAIN_MENU
 
     def render(self):

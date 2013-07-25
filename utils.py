@@ -19,7 +19,7 @@ def pixel_to_index(p):
         as it can be used equally in both axis
     '''
     index = int(p/globals.square_size)
-    return max(0, min(index, globals.squares_per_line))
+    return max(0, min(index, globals.squares_per_line-1))
 
 
 def distance((x1, y1), (x2, y2)):

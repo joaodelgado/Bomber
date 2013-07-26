@@ -46,6 +46,9 @@ EXIT = 4
 
 game_state_label = MAIN_MENU
 game_state = None
+winner = None
+player1_score = 0
+player2_score = 0
 
 # WINDOW
 screen = None

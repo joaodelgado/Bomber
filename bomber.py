@@ -5,6 +5,7 @@ import globals
 
 from mainmenu import Mainmenu
 from game import Game
+from gameover import Gameover
 
 ##############################################################################
 #                               INITIALIZATION                               #
@@ -49,6 +50,8 @@ def change_game_state():
         globals.game_state = Mainmenu()
     elif gs == globals.RUNNING:
         globals.game_state = Game()
+    elif gs == globals.GAME_OVER:
+        globals.game_state = Gameover()
 
 
 ##############################################################################

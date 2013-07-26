@@ -6,26 +6,31 @@ import globals
 
 class Mainmenu(object):
     def __init__(self):
+        globals.player1_score = 0
+        globals.player2_score = 0
+
         self.list = []
 
-        self.font_normal = pygame.font.SysFont('FreeMono', 30)
-        self.font_bold = pygame.font.SysFont('FreeMono', 30, bold=True)
+        self.font_normal = pygame.font.SysFont('FreeMono', 50)
+        self.font_bold = pygame.font.SysFont('FreeMono', 50, bold=True)
 
         self.list.append({
             'text': 'Play',
             'color': globals.red,
-            'x': 40,
+            'x': globals.width / 2,
             'state': globals.RUNNING
         })
         self.list.append({
             'text': 'Exit',
             'color': globals.white,
-            'x': 40,
+            'x': globals.width / 2,
             'state': globals.EXIT
         })
 
+        list_height = self.font_normal.get_height() * len(self.list)
+        start_y = globals.height/2 - list_height/2
         for i in range(len(self.list)):
-            self.list[i]['y'] = 100 + self.font_normal.get_height() * i
+            self.list[i]['y'] = start_y + self.font_normal.get_height() * i
 
         self.current = 0
 
@@ -58,4 +63,10 @@ class Mainmenu(object):
         font = self.font_normal
         for label in self.list:
             image = font.render(label['text'], 1, label['color'])
-            globals.display.blit(image, (label['x'], label['y']))
+            globals.display.blit(
+                image,
+                (
+                    label['x'] - image.get_width()/2,
+                    label['y'] - image.get_height()/2,
+                )
+            )

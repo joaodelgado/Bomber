@@ -10,6 +10,8 @@ class Game(object):
     def __init__(self):
         del globals.squares[0:len(globals.squares)]
 
+        self.gameover_timer = 0
+
         self.p1 = Player(4, 4, globals.white, globals.black, 1)
         self.p2 = Player(14, 4, globals.black, globals.white, 2)
 
@@ -35,40 +37,53 @@ class Game(object):
         self.p2.update_event(event)
 
     def update(self):
-        self.p1.update()
-        self.p2.update()
+        if not self.gameover_timer:
+            self.p1.update()
+            self.p2.update()
 
-        for powerup in globals.powerups:
-            powerup.update()
-            if powerup.i == self.p1.i and \
-               powerup.j == self.p1.j:
-                powerup.pickup(self.p1)
-            if powerup.i == self.p2.i and \
-               powerup.j == self.p2.j:
-                powerup.pickup(self.p2)
+            for powerup in globals.powerups:
+                powerup.update()
+                if powerup.i == self.p1.i and \
+                   powerup.j == self.p1.j:
+                    powerup.pickup(self.p1)
+                if powerup.i == self.p2.i and \
+                   powerup.j == self.p2.j:
+                    powerup.pickup(self.p2)
 
-        for bomb in globals.bombs:
-            bomb.update()
+            for bomb in globals.bombs:
+                bomb.update()
 
-        for explosion in globals.explosions:
-            explosion.update()
-            # checks if a player was hit by an explosion
-            if explosion.i == self.p1.i and \
-               explosion.j == self.p1.j:
-                print "Player 2 won"
-                globals.game_state_label = globals.MAIN_MENU
-            if explosion.i == self.p2.i and \
-               explosion.j == self.p2.j:
-                print "Player 1 won"
-                globals.game_state_label = globals.MAIN_MENU
+            for explosion in globals.explosions:
+                explosion.update()
+                # checks if a player was hit by an explosion
+                if explosion.i == self.p1.i and \
+                   explosion.j == self.p1.j:
+                    globals.winner = "player2"
+                    globals.player2_score += 1
+                    self.gameover_timer = 1000
+                    return
+                if explosion.i == self.p2.i and \
+                   explosion.j == self.p2.j:
+                    globals.winner = "player1"
+                    globals.player1_score += 1
+                    self.gameover_timer = 1000
+                    return
 
-        # checks if a player is in a square that he doesn't own
-        if globals.squares[self.p1.i][self.p1.j].owner != self.p1:
-            print "Player 2 won"
-            globals.game_state_label = globals.MAIN_MENU
-        if globals.squares[self.p2.i][self.p2.j].owner != self.p2:
-            print "Player 1 won"
-            globals.game_state_label = globals.MAIN_MENU
+            # checks if a player is in a square that he doesn't own
+            if globals.squares[self.p1.i][self.p1.j].owner != self.p1:
+                globals.winner = "player2"
+                globals.player2_score += 1
+                self.gameover_timer = 1000
+                return
+            if globals.squares[self.p2.i][self.p2.j].owner != self.p2:
+                globals.winner = "player1"
+                globals.player1_score += 1
+                self.gameover_timer = 1000
+                return
+        else:
+            self.gameover_timer -= globals.clock.get_time()
+            if self.gameover_timer < 0:
+                globals.game_state_label = globals.GAME_OVER
 
     def render(self):
         for line in globals.squares:

@@ -26,23 +26,42 @@ class Bomb(pygame.Rect):
             self.explode()
 
     def explode(self):
+        globals.bombs.remove(self)
+        self.player.current_bombs -= 1
+
         # rewrite for loops
         for i in range(
-                max(0, int(self.i - self.player.bomb_radious)),
+                max(0,
+                    int(self.i - self.player.bomb_radious)),
                 min(globals.squares_per_line,
                     int(self.i+1 + self.player.bomb_radious))):
             for j in range(
-                    max(0, int(self.j - self.player.bomb_radious)),
+                    max(0,
+                        int(self.j - self.player.bomb_radious)),
                     min(globals.squares_per_line,
                         int(self.j+1 + self.player.bomb_radious))):
                 center = (self.i, self.j)
                 square = (i, j)
+
                 if utils.distance(center, square) <= self.player.bomb_radious:
+
+                    # delete powerup in that square, if any
+                    for powerup in globals.powerups:
+                        if powerup.i == square[0] and \
+                           powerup.j == square[1]:
+                            globals.powerups.remove(powerup)
+                            break
+
+                    # delete bomb in that square, if any
+                    for bomb in globals.bombs:
+                        if bomb.i == square[0] and \
+                           bomb.j == square[1]:
+                            globals.bombs.remove(bomb)
+                            break
+
                     globals.explosions.append(Explosion(i, j))
                     if globals.squares[i][j].owner != self.player:
                         globals.squares[i][j].change_owner(self.player)
-        globals.bombs.remove(self)
-        self.player.current_bombs -= 1
 
     def render(self):
         pygame.draw.rect(

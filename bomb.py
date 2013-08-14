@@ -26,8 +26,7 @@ class Bomb(pygame.Rect):
             self.explode()
 
     def explode(self):
-        globals.bombs.remove(self)
-        self.player.current_bombs -= 1
+        bomb.remove()
 
         # rewrite for loops
         for i in range(
@@ -56,12 +55,16 @@ class Bomb(pygame.Rect):
                     for bomb in globals.bombs:
                         if bomb.i == square[0] and \
                            bomb.j == square[1]:
-                            globals.bombs.remove(bomb)
+                            bomb.remove()
                             break
 
                     globals.explosions.append(Explosion(i, j))
                     if globals.squares[i][j].owner != self.player:
                         globals.squares[i][j].change_owner(self.player)
+
+    def remove(self):
+        globals.bombs.remove(self)
+        self.player.current_bombs -= 1
 
     def render(self):
         pygame.draw.rect(

@@ -22,8 +22,6 @@ p_size_diff = 0.7
 p_radious = int(square_size * p_size_diff / 2)
 
 # BOMB
-b_size_diff = 0.7
-b_size = int(square_size * b_size_diff)
 b_timer = 2000
 b_1_images = []
 b_2_images = []
@@ -34,8 +32,6 @@ e_size = int(square_size * e_size_diff)
 
 # POWERUPS
 pw_chance = 0.05
-pw_size_diff = 0.5
-pw_size = int(square_size * pw_size_diff)
 pw_images = []
 
 # OTHER

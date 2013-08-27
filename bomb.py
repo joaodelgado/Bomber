@@ -7,12 +7,11 @@ import utils
 from explosion import Explosion
 
 
-class Bomb(pygame.Rect):
+class Bomb(object):
     def __init__(self, i, j, player):
         self.i = i
         self.j = j
         self.player = player
-        print player.player_number
         self.timer = globals.b_timer
         self.frame_timer = globals.animation_speed
 
@@ -21,12 +20,6 @@ class Bomb(pygame.Rect):
         else:
             self.frames = globals.b_2_images
         self.current_frame = 0
-
-        super(Bomb, self).__init__(
-            utils.index_to_pixel(self.i) - globals.b_size/2,
-            utils.index_to_pixel(self.j) - globals.b_size/2,
-            globals.b_size,
-            globals.b_size)
 
     def update(self):
         self.timer -= globals.clock.get_time()

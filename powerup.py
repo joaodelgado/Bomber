@@ -32,7 +32,7 @@ def init_powerups():
         (increase_speed, [None, globals.pw_images[4], globals.pw_images[5]])
     ]
 
-class Powerup(pygame.Rect):
+class Powerup(object):
     def __init__(self, i, j):
         global powerups
         init_powerups()
@@ -43,12 +43,6 @@ class Powerup(pygame.Rect):
         self.image = pw[1][player]
         self.powerup = pw[0]
         self.timer = 5000
-
-        super(Powerup, self).__init__(
-            utils.index_to_pixel(self.i) - globals.pw_size/2,
-            utils.index_to_pixel(self.j) - globals.pw_size/2,
-            globals.pw_size,
-            globals.pw_size)
 
     def update(self):
         self.timer -= globals.clock.get_time()

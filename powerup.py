@@ -20,22 +20,30 @@ def increase_speed(player):
     player.speed += 0.05
     player.speed = min(player.speed, 0.4)
 
-powerups = [
-    (bigger_bombs, globals.yellow),
-    (increase_bombs, globals.green),
-    (increase_speed, globals.brown)
-]
+powerups = []
 
+
+def init_powerups():
+    global powerups
+    # function and image for each player
+    powerups = [
+        (bigger_bombs, [None, globals.pw_images[0], globals.pw_images[1]]),
+        (increase_bombs, [None, globals.pw_images[2], globals.pw_images[3]]),
+        (increase_speed, [None, globals.pw_images[4], globals.pw_images[5]])
+    ]
 
 class Powerup(pygame.Rect):
     def __init__(self, i, j):
         global powerups
+        init_powerups()
         self.i = i
         self.j = j
         pw = choice(powerups)
-        self.color = pw[1]
+        player = globals.squares[i][j].owner.player_number
+        self.image = pw[1][player]
         self.powerup = pw[0]
         self.timer = 5000
+
         super(Powerup, self).__init__(
             utils.index_to_pixel(self.i) - globals.pw_size/2,
             utils.index_to_pixel(self.j) - globals.pw_size/2,
@@ -52,8 +60,10 @@ class Powerup(pygame.Rect):
         globals.powerups.remove(self)
 
     def render(self):
-        pygame.draw.rect(
-            globals.display,
-            self.color,
-            self
+        globals.display.blit(
+            self.image,
+            (
+                self.i * globals.square_size,
+                self.j * globals.square_size,
+            )
         )

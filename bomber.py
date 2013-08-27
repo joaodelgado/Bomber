@@ -33,20 +33,19 @@ for frame in xrange(1, 3):
     path = os.path.join("res", "bomb_2_" + str(frame) + ".png")
     globals.b_2_images.append(load_image(path))
 
-
-
-globals.b_1_images.append(pygame.image.load(os.path.join("res/bomb_1_1.png")))
-globals.b_1_images.append(pygame.image.load(os.path.join("res/bomb_1_2.png")))
-for i in range(len(globals.b_1_images)):
-    globals.b_1_images[i] = pygame.transform.scale(
-                                globals.b_1_images[i],
-                                (globals.square_size, globals.square_size))
-globals.b_1_images.append(pygame.image.load(os.path.join("res/bomb_1_1.png")))
-globals.b_1_images.append(pygame.image.load(os.path.join("res/bomb_1_2.png")))
-for i in range(len(globals.b_1_images)):
-    globals.b_1_images[i] = pygame.transform.scale(
-                                globals.b_1_images[i],
-                                (globals.square_size, globals.square_size))
+# Load power ups
+path = os.path.join("res", "pw_radious_1_1.png")
+globals.pw_images.append(load_image(path))
+path = os.path.join("res", "pw_radious_2_1.png")
+globals.pw_images.append(load_image(path))
+path = os.path.join("res", "pw_nbombs_1_1.png")
+globals.pw_images.append(load_image(path))
+path = os.path.join("res", "pw_nbombs_2_1.png")
+globals.pw_images.append(load_image(path))
+path = os.path.join("res", "pw_speed_1_1.png")
+globals.pw_images.append(load_image(path))
+path = os.path.join("res", "pw_speed_2_1.png")
+globals.pw_images.append(load_image(path))
 
 
 ##############################################################################

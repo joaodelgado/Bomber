@@ -12,6 +12,7 @@ class Bomb(pygame.Rect):
         self.i = i
         self.j = j
         self.player = player
+        print player.player_number
         self.timer = globals.b_timer
         self.frame_timer = globals.animation_speed
 

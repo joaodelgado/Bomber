@@ -19,10 +19,11 @@ class Square(pygame.Rect):
             globals.square_size)
 
     def change_owner(self, owner):
-        if random.random() < globals.change:
-            globals.powerups.append(Powerup(self.i, self.j))
         self.owner = owner
         self.color = owner.inverted_color
+
+        if random.random() < globals.pw_chance:
+            globals.powerups.append(Powerup(self.i, self.j))
 
     def render(self):
         pygame.draw.rect(globals.display, self.color, self)

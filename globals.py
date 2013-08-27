@@ -33,9 +33,10 @@ e_size_diff = 0.3
 e_size = int(square_size * e_size_diff)
 
 # POWERUPS
-change = 0.05
+pw_chance = 0.05
 pw_size_diff = 0.5
 pw_size = int(square_size * pw_size_diff)
+pw_images = []
 
 # OTHER
 animation_speed = 200

@@ -1,28 +1,31 @@
-import pygame
 import globals
-import utils
 
 
-class Explosion(pygame.Rect):
+class Explosion(object):
     def __init__(self, i, j):
         self.color = globals.orange
         self.i = i
         self.j = j
-        self.shrink_v = 0.07
-        super(Explosion, self).__init__(
-            utils.index_to_pixel(self.i) - globals.e_size/2,
-            utils.index_to_pixel(self.j) - globals.e_size/2,
-            globals.e_size,
-            globals.e_size)
+        player = globals.squares[i][j].owner.player_number
+        self.frames = globals.e_images[player-1]
+        self.frame_timer = globals.animation_speed / 3
+        self.current_frame = 0
 
     def update(self):
-        shrink_offset = self.shrink_v * globals.clock.get_time()
-        self.inflate_ip(-shrink_offset, -shrink_offset)
-        if self.width < 0.03:
+        self.frame_timer -= globals.clock.get_time()
+
+        if self.frame_timer < 0:
+            self.current_frame += 1
+            self.frame_timer = globals.animation_speed / 3
+
+        if self.current_frame == len(self.frames):
             globals.explosions.remove(self)
 
     def render(self):
-        pygame.draw.rect(
-            globals.display,
-            self.color,
-            self)
+        globals.display.blit(
+            self.frames[self.current_frame],
+            (
+                self.i * globals.square_size,
+                self.j * globals.square_size,
+            )
+        )

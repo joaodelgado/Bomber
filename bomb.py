@@ -1,4 +1,3 @@
-import pygame
 from pygame.locals import *
 
 import globals
@@ -64,9 +63,9 @@ class Bomb(object):
                             bomb.remove()
                             break
 
-                    globals.explosions.append(Explosion(i, j))
                     if globals.squares[i][j].owner != self.player:
                         globals.squares[i][j].change_owner(self.player)
+                    globals.explosions.append(Explosion(i, j))
 
     def remove(self):
         globals.bombs.remove(self)

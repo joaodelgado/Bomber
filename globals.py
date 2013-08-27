@@ -18,8 +18,6 @@ green = 0, 255, 0
 brown = 128, 64, 0
 
 # PLAYER
-p_size_diff = 0.7
-p_radious = int(square_size * p_size_diff / 2)
 p1_images = []
 p2_images = []
 
@@ -29,8 +27,8 @@ b_1_images = []
 b_2_images = []
 
 # EXPLOSION
-e_size_diff = 0.3
-e_size = int(square_size * e_size_diff)
+e_images = []
+
 
 # POWERUPS
 pw_chance = 0.05

@@ -75,6 +75,13 @@ for direction in xrange(1,5):
         globals.p2_images[-1][-1].append(load_image(path))
 
 
+# Load explosion images
+for player in xrange(1, 3):
+    globals.e_images.append([])
+    for frame in xrange(1, 7):
+        path = os.path.join("res", "explosion_" + str(player) + "_" + str(frame) + ".png")
+        globals.e_images[-1].append(load_image(path))
+
 
 ##############################################################################
 #                                 GAME LOGIC                                 #
@@ -83,7 +90,10 @@ def update():
     last_game_state = globals.game_state_label
 
     for event in pygame.event.get():
-        globals.game_state.update_event(event)
+        if event.type == QUIT:
+            globals.game_state_label = globals.EXIT
+        else:
+            globals.game_state.update_event(event)
     globals.game_state.update()
 
     if globals.game_state_label != last_game_state:

@@ -1,9 +1,6 @@
-import pygame
-
 from random import choice
 
 import globals
-import utils
 
 
 def bigger_bombs(player):

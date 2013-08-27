@@ -1,5 +1,4 @@
 import math
-import pygame
 from pygame.locals import *
 
 import globals
@@ -121,12 +120,11 @@ class Player(object):
                 dy = -math.sin(math.pi / 4) * velocity
 
         # collision checking #
-        x = self.center[0] + dx
-        y = self.center[1] + dy
-        left = x - globals.p_radious
-        right = x + globals.p_radious
-        top = y - globals.p_radious
-        bottom = y + globals.p_radious
+        x, y = self.center[0] + dx, self.center[1] + dy
+        left = x - (globals.square_size / 2)
+        right = x + (globals.square_size / 2)
+        top = y - (globals.square_size / 2)
+        bottom = y + (globals.square_size / 2)
         index_x = utils.pixel_to_index(x)
         index_y = utils.pixel_to_index(y)
         index_left = utils.pixel_to_index(left)
@@ -137,32 +135,32 @@ class Player(object):
         #surrounding squares
         if globals.squares[index_left][index_y].owner != self:
             x = globals.square_size * index_left + \
-                globals.square_size + globals.p_radious
+                globals.square_size + (globals.square_size / 2)
         elif globals.squares[index_right][index_y].owner != self:
             x = globals.square_size * index_right - \
-                globals.p_radious
+                (globals.square_size / 2)
         if globals.squares[index_x][index_top].owner != self:
             y = globals.square_size * index_top + \
-                globals.square_size + globals.p_radious
+                globals.square_size + (globals.square_size / 2)
         elif globals.squares[index_x][index_bottom].owner != self:
             y = globals.square_size * index_bottom - \
-                globals.p_radious
+                (globals.square_size / 2)
 
         #recalculate variables
-        left = x - globals.p_radious
-        right = x + globals.p_radious
-        top = y - globals.p_radious
-        bottom = y + globals.p_radious
+        left = x - (globals.square_size / 2)
+        right = x + (globals.square_size / 2)
+        top = y - (globals.square_size / 2)
+        bottom = y + (globals.square_size / 2)
 
         #window borders
         if left < 0:
-            x = globals.p_radious
+            x = (globals.square_size / 2)
         elif right >= globals.width:
-            x = globals.width - globals.p_radious - 1
+            x = globals.width - (globals.square_size / 2) - 1
         if top < 0:
-            y = globals.p_radious
+            y = (globals.square_size / 2)
         elif bottom >= globals.height:
-            y = globals.height - globals.p_radious - 1
+            y = globals.height - (globals.square_size / 2) - 1
 
         self.center = [
             x,

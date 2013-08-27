@@ -30,9 +30,6 @@ class Game(object):
         del globals.powerups[0:len(globals.powerups)]
 
     def update_event(self, event):
-        if event.type == QUIT:
-            globals.game_state_label = globals.EXIT
-
         self.p1.update_event(event)
         self.p2.update_event(event)
 

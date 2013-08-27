@@ -16,6 +16,7 @@ class Player(object):
         self.j = j
         self.player_number = player_number
 
+
         self.keys = {
             "up": False,
             "down": False,
@@ -25,18 +26,25 @@ class Player(object):
         }
 
         if player_number == 1:
+            self.images = globals.p1_images
             self.up = K_w
             self.down = K_s
             self.left = K_a
             self.right = K_d
             self.place = K_SPACE
         elif player_number == 2:
+            self.images = globals.p2_images
             self.up = K_UP
             self.down = K_DOWN
             self.left = K_LEFT
             self.right = K_RIGHT
             self.place = K_p
 
+        self.state = globals.P_S_STILL
+        self.direction = globals.P_D_FRONT
+        self.frame_timer = globals.animation_speed
+        self.current_frame = 0
+        self.frames = self.images[self.state][self.direction]
         self.max_bombs = 1
         self.current_bombs = 0
         self.bomb_radious = 2
@@ -46,12 +54,16 @@ class Player(object):
     def update_event(self, event):
         if event.type == KEYDOWN:
             if event.key == self.up:
+                self.change_direction(globals.P_D_BACK)
                 self.keys['up'] = True
             elif event.key == self.down:
+                self.change_direction(globals.P_D_FRONT)
                 self.keys['down'] = True
             elif event.key == self.left:
+                self.change_direction(globals.P_D_LEFT)
                 self.keys['left'] = True
             elif event.key == self.right:
+                self.change_direction(globals.P_D_RIGHT)
                 self.keys['right'] = True
             elif event.key == self.place:
                 self.keys['place'] = True
@@ -67,7 +79,20 @@ class Player(object):
             elif event.key == self.place:
                 self.keys['place'] = False
 
+        for key in self.keys:
+            if self.keys[key]:
+                self.change_state(globals.P_S_MOVING)
+                break;
+            else:
+                self.change_state(globals.P_S_STILL)
+
     def update(self):
+        self.frame_timer -= globals.clock.get_time()
+        if self.frame_timer < 0:
+            self.current_frame = (self.current_frame + 1) % len(self.frames)
+            self.frame_timer = globals.animation_speed
+
+
         self.move()
         if self.keys['place']:
             self.place_bomb()
@@ -162,10 +187,25 @@ class Player(object):
             self.current_bombs += 1
             globals.bombs.append(Bomb(self.i, self.j, self))
 
+    def change_state(self, state):
+        if self.state != state:
+            self.state = state
+            self.frame_timer = globals.animation_speed
+            self.frames = self.images[self.state][self.direction]
+            self.current_frame = 0
+
+    def change_direction(self, direction):
+        if self.direction != direction:
+            self.direction = direction
+            self.frame_timer = globals.animation_speed
+            self.frames = self.images[self.state][self.direction]
+            self.current_frame = 0
+
     def render(self):
-        pygame.draw.circle(
-            globals.display,
-            self.color,
-            (int(self.center[0]), int(self.center[1])),
-            globals.p_radious
+        globals.display.blit(
+            self.frames[self.current_frame],
+            (
+                self.center[0] - globals.square_size / 2,
+                self.center[1] - globals.square_size / 2
+            )
         )

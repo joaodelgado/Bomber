@@ -20,6 +20,8 @@ brown = 128, 64, 0
 # PLAYER
 p_size_diff = 0.7
 p_radious = int(square_size * p_size_diff / 2)
+p1_images = []
+p2_images = []
 
 # BOMB
 b_timer = 2000
@@ -46,6 +48,16 @@ RUNNING = 1
 PAUSED = 2
 GAME_OVER = 3
 EXIT = 4
+
+# PLAYER STATE
+P_S_STILL = 0
+P_S_MOVING = 1
+
+# PLAYER DIRECTION
+P_D_FRONT = 0
+P_D_LEFT = 1
+P_D_RIGHT = 2
+P_D_BACK = 3
 
 game_state_label = MAIN_MENU
 game_state = None

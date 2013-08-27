@@ -14,12 +14,12 @@ class Bomb(object):
         self.player = player
         self.timer = globals.b_timer
         self.frame_timer = globals.animation_speed
+        self.current_frame = 0
 
         if player.player_number == 1:
             self.frames = globals.b_1_images
         else:
             self.frames = globals.b_2_images
-        self.current_frame = 0
 
     def update(self):
         self.timer -= globals.clock.get_time()

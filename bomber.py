@@ -47,6 +47,34 @@ globals.pw_images.append(load_image(path))
 path = os.path.join("res", "pw_speed_2_1.png")
 globals.pw_images.append(load_image(path))
 
+# Load player images
+globals.p1_images.append([])
+for direction in xrange(1,5):
+    globals.p1_images[-1].append([])
+    for frame in xrange(1, 2):
+        path = os.path.join("res", "player_still_" + str(direction) + "_1_" + str(frame) + ".png")
+        globals.p1_images[-1][-1].append(load_image(path))
+globals.p2_images.append([])
+for direction in xrange(1,5):
+    globals.p2_images[-1].append([])
+    for frame in xrange(1, 2):
+        path = os.path.join("res", "player_still_" + str(direction) + "_2_" + str(frame) + ".png")
+        globals.p2_images[-1][-1].append(load_image(path))
+
+globals.p1_images.append([])
+for direction in xrange(1,5):
+    globals.p1_images[-1].append([])
+    for frame in xrange(1, 3):
+        path = os.path.join("res", "player_moving_" + str(direction) + "_1_" + str(frame) + ".png")
+        globals.p1_images[-1][-1].append(load_image(path))
+globals.p2_images.append([])
+for direction in xrange(1,5):
+    globals.p2_images[-1].append([])
+    for frame in xrange(1, 3):
+        path = os.path.join("res", "player_moving_" + str(direction) + "_2_" + str(frame) + ".png")
+        globals.p2_images[-1][-1].append(load_image(path))
+
+
 
 ##############################################################################
 #                                 GAME LOGIC                                 #

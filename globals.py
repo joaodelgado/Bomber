@@ -18,19 +18,17 @@ green = 0, 255, 0
 brown = 128, 64, 0
 
 # PLAYER
-p1_images = []
-p2_images = []
+p_images = [] #player, pose, direction, frame
 
 # BOMB
 b_timer = 2000
-b_1_images = []
-b_2_images = []
+b_images = []
 
 # EXPLOSION
 e_images = []
 
-
 # POWERUPS
+pw_timer = 5000
 pw_chance = 0.05
 pw_images = []
 
@@ -48,8 +46,8 @@ GAME_OVER = 3
 EXIT = 4
 
 # PLAYER STATE
-P_S_STILL = 0
-P_S_MOVING = 1
+P_S_MOVING = 0
+P_S_STILL = 1
 
 # PLAYER DIRECTION
 P_D_FRONT = 0

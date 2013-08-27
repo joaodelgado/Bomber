@@ -2,6 +2,7 @@ from random import choice
 
 import globals
 
+from animation import Animation
 
 def bigger_bombs(player):
     player.bomb_radious += 0.5
@@ -24,9 +25,9 @@ def init_powerups():
     global powerups
     # function and image for each player
     powerups = [
-        (bigger_bombs, [None, globals.pw_images[0], globals.pw_images[1]]),
-        (increase_bombs, [None, globals.pw_images[2], globals.pw_images[3]]),
-        (increase_speed, [None, globals.pw_images[4], globals.pw_images[5]])
+        bigger_bombs,
+        increase_bombs,
+        increase_speed
     ]
 
 class Powerup(object):
@@ -35,26 +36,25 @@ class Powerup(object):
         init_powerups()
         self.i = i
         self.j = j
-        pw = choice(powerups)
-        player = globals.squares[i][j].owner.player_number
-        self.image = pw[1][player]
-        self.powerup = pw[0]
-        self.timer = 5000
+        self.timer = globals.pw_timer
+        self.powerup = choice(powerups)
+        index = powerups.index(self.powerup)
+        player = globals.squares[i][j].owner.player_number-1
+        self.animation = Animation(globals.pw_images[index][player])
 
     def update(self):
         self.timer -= globals.clock.get_time()
         if self.timer < 0:
             globals.powerups.remove(self)
 
+        self.animation.update()
+
     def pickup(self, player):
         self.powerup(player)
         globals.powerups.remove(self)
 
     def render(self):
-        globals.display.blit(
-            self.image,
-            (
-                self.i * globals.square_size,
-                self.j * globals.square_size,
-            )
+        self.animation.render(
+            self.i * globals.square_size,
+            self.j * globals.square_size,
         )

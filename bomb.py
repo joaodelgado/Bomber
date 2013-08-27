@@ -4,7 +4,7 @@ import globals
 import utils
 
 from explosion import Explosion
-
+from animation import Animation
 
 class Bomb(object):
     def __init__(self, i, j, player):
@@ -12,23 +12,13 @@ class Bomb(object):
         self.j = j
         self.player = player
         self.timer = globals.b_timer
-        self.frame_timer = globals.animation_speed
-        self.current_frame = 0
-
-        if player.player_number == 1:
-            self.frames = globals.b_1_images
-        else:
-            self.frames = globals.b_2_images
+        self.animation = Animation(globals.b_images[player.player_number-1])
 
     def update(self):
         self.timer -= globals.clock.get_time()
-        self.frame_timer -= globals.clock.get_time()
-
-        if self.frame_timer < 0:
-            self.current_frame = (self.current_frame + 1) % len(self.frames)
-            self.frame_timer = globals.animation_speed
         if self.timer < 0:
             self.explode()
+        self.animation.update()
 
     def explode(self):
         self.remove()
@@ -72,10 +62,7 @@ class Bomb(object):
         self.player.current_bombs -= 1
 
     def render(self):
-        globals.display.blit(
-            self.frames[self.current_frame],
-            (
-                self.i * globals.square_size,
-                self.j * globals.square_size,
-            )
+        self.animation.render(
+            self.i * globals.square_size,
+            self.j * globals.square_size,
         )

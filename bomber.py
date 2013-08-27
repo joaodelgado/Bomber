@@ -26,54 +26,11 @@ def load_image(path):
     return image
 
 # Load bomb images
-for frame in xrange(1, 3):
-    path = os.path.join("res", "bomb_1_" + str(frame) + ".png")
-    globals.b_1_images.append(load_image(path))
-for frame in xrange(1, 3):
-    path = os.path.join("res", "bomb_2_" + str(frame) + ".png")
-    globals.b_2_images.append(load_image(path))
-
-# Load power ups
-path = os.path.join("res", "pw_radious_1_1.png")
-globals.pw_images.append(load_image(path))
-path = os.path.join("res", "pw_radious_2_1.png")
-globals.pw_images.append(load_image(path))
-path = os.path.join("res", "pw_nbombs_1_1.png")
-globals.pw_images.append(load_image(path))
-path = os.path.join("res", "pw_nbombs_2_1.png")
-globals.pw_images.append(load_image(path))
-path = os.path.join("res", "pw_speed_1_1.png")
-globals.pw_images.append(load_image(path))
-path = os.path.join("res", "pw_speed_2_1.png")
-globals.pw_images.append(load_image(path))
-
-# Load player images
-globals.p1_images.append([])
-for direction in xrange(1,5):
-    globals.p1_images[-1].append([])
-    for frame in xrange(1, 2):
-        path = os.path.join("res", "player_still_" + str(direction) + "_1_" + str(frame) + ".png")
-        globals.p1_images[-1][-1].append(load_image(path))
-globals.p2_images.append([])
-for direction in xrange(1,5):
-    globals.p2_images[-1].append([])
-    for frame in xrange(1, 2):
-        path = os.path.join("res", "player_still_" + str(direction) + "_2_" + str(frame) + ".png")
-        globals.p2_images[-1][-1].append(load_image(path))
-
-globals.p1_images.append([])
-for direction in xrange(1,5):
-    globals.p1_images[-1].append([])
+for player in xrange(1, 3):
+    globals.b_images.append([])
     for frame in xrange(1, 3):
-        path = os.path.join("res", "player_moving_" + str(direction) + "_1_" + str(frame) + ".png")
-        globals.p1_images[-1][-1].append(load_image(path))
-globals.p2_images.append([])
-for direction in xrange(1,5):
-    globals.p2_images[-1].append([])
-    for frame in xrange(1, 3):
-        path = os.path.join("res", "player_moving_" + str(direction) + "_2_" + str(frame) + ".png")
-        globals.p2_images[-1][-1].append(load_image(path))
-
+        path = os.path.join("res", "bomb_" + str(player) + "_" + str(frame) + ".png")
+        globals.b_images[-1].append(load_image(path))
 
 # Load explosion images
 for player in xrange(1, 3):
@@ -81,6 +38,34 @@ for player in xrange(1, 3):
     for frame in xrange(1, 7):
         path = os.path.join("res", "explosion_" + str(player) + "_" + str(frame) + ".png")
         globals.e_images[-1].append(load_image(path))
+
+# Load player images
+for player in xrange(1, 3):
+    globals.p_images.append([])
+
+    # Moving
+    globals.p_images[-1].append([])
+    for direction in xrange(1,5):
+        globals.p_images[-1][-1].append([])
+        for frame in xrange(1, 3):
+            path = os.path.join("res", "player_" + str(player) + "_1_" + str(direction) + "_" + str(frame) + ".png")
+            globals.p_images[-1][-1][-1].append(load_image(path))
+    # Still
+    globals.p_images[-1].append([])
+    for direction in xrange(1,5):
+        globals.p_images[-1][-1].append([])
+        for frame in xrange(1, 2):
+            path = os.path.join("res", "player_" + str(player) + "_2_" + str(direction) + "_" + str(frame) + ".png")
+            globals.p_images[-1][-1][-1].append(load_image(path))
+
+# Load power ups
+for powerup in xrange(1, 4):
+    globals.pw_images.append([])
+    for player in xrange(1, 3):
+        globals.pw_images[-1].append([])
+        for frame in xrange(1, 2):
+            path = os.path.join("res", "pw_" + str(powerup) + "_" + str(player) + "_" + str(frame) + ".png")
+            globals.pw_images[-1][-1].append(load_image(path))
 
 
 ##############################################################################

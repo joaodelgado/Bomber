@@ -5,6 +5,7 @@ import globals
 import utils
 
 from bomb import Bomb
+from animation import Animation
 
 
 class Player(object):
@@ -25,14 +26,12 @@ class Player(object):
         }
 
         if player_number == 1:
-            self.images = globals.p1_images
             self.up = K_w
             self.down = K_s
             self.left = K_a
             self.right = K_d
             self.place = K_SPACE
         elif player_number == 2:
-            self.images = globals.p2_images
             self.up = K_UP
             self.down = K_DOWN
             self.left = K_LEFT
@@ -41,9 +40,39 @@ class Player(object):
 
         self.state = globals.P_S_STILL
         self.direction = globals.P_D_FRONT
-        self.frame_timer = globals.animation_speed
-        self.current_frame = 0
-        self.frames = self.images[self.state][self.direction]
+
+        self.animations = [
+            [
+            Animation(globals.p_images[self.player_number-1] \
+                                      [globals.P_S_MOVING] \
+                                      [globals.P_D_FRONT]),
+            Animation(globals.p_images[self.player_number-1] \
+                                      [globals.P_S_MOVING] \
+                                      [globals.P_D_LEFT]),
+            Animation(globals.p_images[self.player_number-1] \
+                                      [globals.P_S_MOVING] \
+                                      [globals.P_D_RIGHT]),
+            Animation(globals.p_images[self.player_number-1] \
+                                      [globals.P_S_MOVING] \
+                                      [globals.P_D_BACK]),
+            ],
+            [
+            Animation(globals.p_images[self.player_number-1] \
+                                      [globals.P_S_STILL] \
+                                      [globals.P_D_FRONT]),
+            Animation(globals.p_images[self.player_number-1] \
+                                      [globals.P_S_STILL] \
+                                      [globals.P_D_LEFT]),
+            Animation(globals.p_images[self.player_number-1] \
+                                      [globals.P_S_STILL] \
+                                      [globals.P_D_RIGHT]),
+            Animation(globals.p_images[self.player_number-1] \
+                                      [globals.P_S_STILL] \
+                                      [globals.P_D_BACK]),
+            ]
+        ]
+        self.current_animation = self.animations[self.state][self.direction]
+
         self.max_bombs = 1
         self.current_bombs = 0
         self.bomb_radious = 2
@@ -86,11 +115,7 @@ class Player(object):
                 self.change_state(globals.P_S_STILL)
 
     def update(self):
-        self.frame_timer -= globals.clock.get_time()
-        if self.frame_timer < 0:
-            self.current_frame = (self.current_frame + 1) % len(self.frames)
-            self.frame_timer = globals.animation_speed
-
+        self.current_animation.update()
 
         self.move()
         if self.keys['place']:
@@ -119,6 +144,10 @@ class Player(object):
             else:
                 dy = -math.sin(math.pi / 4) * velocity
 
+        self.handle_collisions(dx, dy)
+        self.update_index()
+
+    def handle_collisions(self, dx, dy):
         # collision checking #
         x, y = self.center[0] + dx, self.center[1] + dy
         left = x - (globals.square_size / 2)
@@ -166,7 +195,6 @@ class Player(object):
             x,
             y,
         ]
-        self.update_index()
 
     def update_center(self):
         '''updates the center of the circle according to i and j'''
@@ -188,22 +216,20 @@ class Player(object):
     def change_state(self, state):
         if self.state != state:
             self.state = state
-            self.frame_timer = globals.animation_speed
-            self.frames = self.images[self.state][self.direction]
-            self.current_frame = 0
+            self.change_animation()
 
     def change_direction(self, direction):
         if self.direction != direction:
             self.direction = direction
-            self.frame_timer = globals.animation_speed
-            self.frames = self.images[self.state][self.direction]
-            self.current_frame = 0
+            self.change_animation()
+
+    def change_animation(self):
+        self.current_animation.stop()
+        self.current_animation = self.animations[self.state][self.direction]
+        self.current_animation.start()
 
     def render(self):
-        globals.display.blit(
-            self.frames[self.current_frame],
-            (
-                self.center[0] - globals.square_size / 2,
-                self.center[1] - globals.square_size / 2
-            )
+        self.current_animation.render (
+            self.center[0] - globals.square_size / 2,
+            self.center[1] - globals.square_size / 2
         )

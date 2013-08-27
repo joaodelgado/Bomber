@@ -12,8 +12,15 @@ class Bomb(pygame.Rect):
         self.i = i
         self.j = j
         self.player = player
-        self.timer = 2000
-        self.color = globals.red
+        self.timer = globals.b_timer
+        self.frame_timer = globals.animation_speed
+
+        if player.player_number == 1:
+            self.frames = globals.b_1_images
+        else:
+            self.frames = globals.b_2_images
+        self.current_frame = 0
+
         super(Bomb, self).__init__(
             utils.index_to_pixel(self.i) - globals.b_size/2,
             utils.index_to_pixel(self.j) - globals.b_size/2,
@@ -22,11 +29,16 @@ class Bomb(pygame.Rect):
 
     def update(self):
         self.timer -= globals.clock.get_time()
+        self.frame_timer -= globals.clock.get_time()
+
+        if self.frame_timer < 0:
+            self.current_frame = (self.current_frame + 1) % len(self.frames)
+            self.frame_timer = globals.animation_speed
         if self.timer < 0:
             self.explode()
 
     def explode(self):
-        bomb.remove()
+        self.remove()
 
         # rewrite for loops
         for i in range(
@@ -67,7 +79,10 @@ class Bomb(pygame.Rect):
         self.player.current_bombs -= 1
 
     def render(self):
-        pygame.draw.rect(
-            globals.display,
-            self.color,
-            self)
+        globals.display.blit(
+            self.frames[self.current_frame],
+            (
+                self.i * globals.square_size,
+                self.j * globals.square_size,
+            )
+        )

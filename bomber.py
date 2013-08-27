@@ -1,3 +1,4 @@
+import os
 import pygame
 from pygame.locals import *
 
@@ -15,6 +16,37 @@ pygame.init()
 globals.screen = pygame.display.set_mode([globals.width, globals.height])
 globals.display = pygame.display.get_surface()
 globals.clock = pygame.time.Clock()
+
+
+def load_image(path):
+    image = pygame.image.load(path)
+    image = pygame.transform.scale(
+                image,
+                (globals.square_size, globals.square_size))
+    return image
+
+# Load bomb images
+for frame in xrange(1, 3):
+    path = os.path.join("res", "bomb_1_" + str(frame) + ".png")
+    globals.b_1_images.append(load_image(path))
+for frame in xrange(1, 3):
+    path = os.path.join("res", "bomb_2_" + str(frame) + ".png")
+    globals.b_2_images.append(load_image(path))
+
+
+
+globals.b_1_images.append(pygame.image.load(os.path.join("res/bomb_1_1.png")))
+globals.b_1_images.append(pygame.image.load(os.path.join("res/bomb_1_2.png")))
+for i in range(len(globals.b_1_images)):
+    globals.b_1_images[i] = pygame.transform.scale(
+                                globals.b_1_images[i],
+                                (globals.square_size, globals.square_size))
+globals.b_1_images.append(pygame.image.load(os.path.join("res/bomb_1_1.png")))
+globals.b_1_images.append(pygame.image.load(os.path.join("res/bomb_1_2.png")))
+for i in range(len(globals.b_1_images)):
+    globals.b_1_images[i] = pygame.transform.scale(
+                                globals.b_1_images[i],
+                                (globals.square_size, globals.square_size))
 
 
 ##############################################################################

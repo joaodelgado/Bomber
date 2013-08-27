@@ -14,6 +14,7 @@ class Player(object):
         self.inverted_color = inverted_color
         self.i = i
         self.j = j
+        self.player_number = player_number
 
         self.keys = {
             "up": False,

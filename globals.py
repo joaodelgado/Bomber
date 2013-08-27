@@ -24,6 +24,9 @@ p_radious = int(square_size * p_size_diff / 2)
 # BOMB
 b_size_diff = 0.7
 b_size = int(square_size * b_size_diff)
+b_timer = 2000
+b_1_images = []
+b_2_images = []
 
 # EXPLOSION
 e_size_diff = 0.3
@@ -33,6 +36,9 @@ e_size = int(square_size * e_size_diff)
 change = 0.05
 pw_size_diff = 0.5
 pw_size = int(square_size * pw_size_diff)
+
+# OTHER
+animation_speed = 200
 
 ##############################################################################
 #                               GAME VARIABLES                               #

@@ -68,12 +68,12 @@ class Game(object):
                     return
 
             # checks if a player is in a square that he doesn't own
-            if globals.squares[self.p1.i][self.p1.j].owner != self.p1:
+            if self.p1.check_collision():
                 globals.winner = "player2"
                 globals.player2_score += 1
                 self.gameover_timer = 1000
                 return
-            if globals.squares[self.p2.i][self.p2.j].owner != self.p2:
+            if self.p2.check_collision():
                 globals.winner = "player1"
                 globals.player1_score += 1
                 self.gameover_timer = 1000

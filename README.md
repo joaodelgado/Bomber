@@ -25,4 +25,10 @@ To play just make sure you have [Python 2.7](http://www.python.org/) and [Pygame
         P to place a bomb
 
 ###Change Log
+* [Version 1.2](https://github.com/joaodelgado/Bomber/tree/v1.2)
+	+ Game over is now detected correctly, even when the player isn't in the center of the conquered square.
+
+* [Version 1.1](https://github.com/joaodelgado/Bomber/tree/v1.1)
+	+ Collisions are now correctly detected (no more jumpy jump around corners)
+
 * [Version 1.0](https://github.com/joaodelgado/Bomber/tree/v1.0)

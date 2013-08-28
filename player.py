@@ -101,7 +101,7 @@ class Player(object):
             elif event.key == self.right:
                 self.keys['right'] = False
             elif event.key == self.place:
-                self.keys['place'] = Falsea
+                self.keys['place'] = False
 
         if self.keys['left']:
             self.change_direction(globals.P_D_LEFT)
@@ -153,54 +153,69 @@ class Player(object):
         self.center = self.handle_collisions(dx, dy)
         self.update_index()
 
-    def handle_collisions(self, dx, dy):
+    def check_collision(self, dx=0, dy=0):
+        collision = []
         x = self.center[0]
         y = self.center[1]
         #surrounding squares
-        if dx:
-            x += dx
-            left = x - (globals.p_col_width / 2)
-            right = x + (globals.p_col_width / 2)
-            top = y - (globals.p_col_height / 2)
-            bottom = y + (globals.p_col_height / 2)
-            index_left = utils.pixel_to_index(left)
-            index_right = utils.pixel_to_index(right)
-            index_top = utils.pixel_to_index(top)
-            index_bottom = utils.pixel_to_index(bottom)
-            if globals.squares[index_left][index_top].owner != self or \
-               globals.squares[index_left][index_bottom].owner != self or \
-               globals.squares[index_right][index_top].owner != self or \
-               globals.squares[index_right][index_bottom].owner != self:
-                x -= dx
-        if dy:
-            y += dy
-            left = x - (globals.p_col_width / 2)
-            right = x + (globals.p_col_width / 2)
-            top = y - (globals.p_col_height / 2)
-            bottom = y + (globals.p_col_height / 2)
-            index_left = utils.pixel_to_index(left)
-            index_right = utils.pixel_to_index(right)
-            index_top = utils.pixel_to_index(top)
-            index_bottom = utils.pixel_to_index(bottom)
-            if globals.squares[index_left][index_top].owner != self or \
-               globals.squares[index_right][index_top].owner != self or \
-               globals.squares[index_left][index_bottom].owner != self or \
-               globals.squares[index_right][index_bottom].owner != self:
-                y -= dy
+        x += dx
+        left = x - (globals.p_col_width / 2)
+        right = x + (globals.p_col_width / 2)
+        top = y - (globals.p_col_height / 2)
+        bottom = y + (globals.p_col_height / 2)
+        index_left = utils.pixel_to_index(left)
+        index_right = utils.pixel_to_index(right)
+        index_top = utils.pixel_to_index(top)
+        index_bottom = utils.pixel_to_index(bottom)
+        if globals.squares[index_left][index_top].owner != self or \
+           globals.squares[index_left][index_bottom].owner != self or \
+           globals.squares[index_right][index_top].owner != self or \
+           globals.squares[index_right][index_bottom].owner != self:
+            collision.append('x')
+            x -= dx
+
+        y += dy
+        left = x - (globals.p_col_width / 2)
+        right = x + (globals.p_col_width / 2)
+        top = y - (globals.p_col_height / 2)
+        bottom = y + (globals.p_col_height / 2)
+        index_left = utils.pixel_to_index(left)
+        index_right = utils.pixel_to_index(right)
+        index_top = utils.pixel_to_index(top)
+        index_bottom = utils.pixel_to_index(bottom)
+        if globals.squares[index_left][index_top].owner != self or \
+           globals.squares[index_right][index_top].owner != self or \
+           globals.squares[index_left][index_bottom].owner != self or \
+           globals.squares[index_right][index_bottom].owner != self:
+            collision.append('y')
+            y -= dy
 
         #window borders
         left = x - (globals.p_col_width / 2)
         right = x + (globals.p_col_width / 2)
         top = y - (globals.p_col_height / 2)
         bottom = y + (globals.p_col_height / 2)
-        if left < 0:
-            x -= dx
-        elif right >= globals.width:
-            x -= dx
-        if top < 0:
-            y -= dy
-        elif bottom >= globals.height:
-            y -= dy
+        if left < 0 or \
+           right >= globals.width:
+            if 'x' not in collision:
+                collision.append('x')
+        if top < 0 or \
+           bottom >= globals.height:
+            if 'y' not in collision:
+                collision.append('y')
+
+        return collision
+
+    def handle_collisions(self, dx, dy):
+        x = self.center[0] + dx
+        y = self.center[1] + dy
+
+        collision = self.check_collision(dx, dy)
+        if collision:
+            if 'x' in collision:
+                x -= dx
+            if 'y' in collision:
+                y -= dy
 
         return (x, y)
 

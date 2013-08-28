@@ -30,8 +30,9 @@ class Game(object):
         del globals.powerups[0:len(globals.powerups)]
 
     def update_event(self, event):
-        self.p1.update_event(event)
-        self.p2.update_event(event)
+        if not self.gameover_timer:
+            self.p1.update_event(event)
+            self.p2.update_event(event)
 
     def update(self):
         if not self.gameover_timer:

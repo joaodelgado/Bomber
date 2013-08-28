@@ -2,8 +2,7 @@
 #                                  CONSTANTS                                 #
 ##############################################################################
 # BOARD
-width = 800
-height = 800
+width = height = 800
 square_size = 40
 squares_per_line = width/square_size
 squares_per_column = height/square_size

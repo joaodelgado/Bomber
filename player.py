@@ -82,16 +82,12 @@ class Player(object):
     def update_event(self, event):
         if event.type == KEYDOWN:
             if event.key == self.up:
-                self.change_direction(globals.P_D_BACK)
                 self.keys['up'] = True
             elif event.key == self.down:
-                self.change_direction(globals.P_D_FRONT)
                 self.keys['down'] = True
             elif event.key == self.left:
-                self.change_direction(globals.P_D_LEFT)
                 self.keys['left'] = True
             elif event.key == self.right:
-                self.change_direction(globals.P_D_RIGHT)
                 self.keys['right'] = True
             elif event.key == self.place:
                 self.keys['place'] = True
@@ -105,7 +101,17 @@ class Player(object):
             elif event.key == self.right:
                 self.keys['right'] = False
             elif event.key == self.place:
-                self.keys['place'] = False
+                self.keys['place'] = Falsea
+
+        if self.keys['left']:
+            self.change_direction(globals.P_D_LEFT)
+        elif self.keys['right']:
+            self.change_direction(globals.P_D_RIGHT)
+        elif self.keys['up']:
+            self.change_direction(globals.P_D_BACK)
+        elif self.keys['down']:
+            self.change_direction(globals.P_D_FRONT)
+
 
         for key in self.keys:
             if self.keys[key]:

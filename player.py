@@ -14,6 +14,7 @@ class Player(object):
         self.inverted_color = inverted_color
         self.i = i
         self.j = j
+        self.update_center()
         self.player_number = player_number
 
 
@@ -77,7 +78,6 @@ class Player(object):
         self.current_bombs = 0
         self.bomb_radious = 2
         self.speed = 0.2
-        self.update_center()
 
     def update_event(self, event):
         if event.type == KEYDOWN:
@@ -144,57 +144,60 @@ class Player(object):
             else:
                 dy = -math.sin(math.pi / 4) * velocity
 
-        self.handle_collisions(dx, dy)
+        self.center = self.handle_collisions(dx, dy)
         self.update_index()
 
     def handle_collisions(self, dx, dy):
-        # collision checking #
-        x, y = self.center[0] + dx, self.center[1] + dy
-        left = x - (globals.square_size / 2)
-        right = x + (globals.square_size / 2)
-        top = y - (globals.square_size / 2)
-        bottom = y + (globals.square_size / 2)
-        index_x = utils.pixel_to_index(x)
-        index_y = utils.pixel_to_index(y)
-        index_left = utils.pixel_to_index(left)
-        index_right = utils.pixel_to_index(right)
-        index_top = utils.pixel_to_index(top)
-        index_bottom = utils.pixel_to_index(bottom)
-
+        x = self.center[0]
+        y = self.center[1]
         #surrounding squares
-        if globals.squares[index_left][index_y].owner != self:
-            x = globals.square_size * index_left + \
-                globals.square_size + (globals.square_size / 2)
-        elif globals.squares[index_right][index_y].owner != self:
-            x = globals.square_size * index_right - \
-                (globals.square_size / 2)
-        if globals.squares[index_x][index_top].owner != self:
-            y = globals.square_size * index_top + \
-                globals.square_size + (globals.square_size / 2)
-        elif globals.squares[index_x][index_bottom].owner != self:
-            y = globals.square_size * index_bottom - \
-                (globals.square_size / 2)
-
-        #recalculate variables
-        left = x - (globals.square_size / 2)
-        right = x + (globals.square_size / 2)
-        top = y - (globals.square_size / 2)
-        bottom = y + (globals.square_size / 2)
+        if dx:
+            x += dx
+            left = x - (globals.p_col_width / 2)
+            right = x + (globals.p_col_width / 2)
+            top = y - (globals.p_col_height / 2)
+            bottom = y + (globals.p_col_height / 2)
+            index_left = utils.pixel_to_index(left)
+            index_right = utils.pixel_to_index(right)
+            index_top = utils.pixel_to_index(top)
+            index_bottom = utils.pixel_to_index(bottom)
+            if globals.squares[index_left][index_top].owner != self or \
+               globals.squares[index_left][index_bottom].owner != self or \
+               globals.squares[index_right][index_top].owner != self or \
+               globals.squares[index_right][index_bottom].owner != self:
+                x -= dx
+        if dy:
+            y += dy
+            left = x - (globals.p_col_width / 2)
+            right = x + (globals.p_col_width / 2)
+            top = y - (globals.p_col_height / 2)
+            bottom = y + (globals.p_col_height / 2)
+            index_left = utils.pixel_to_index(left)
+            index_right = utils.pixel_to_index(right)
+            index_top = utils.pixel_to_index(top)
+            index_bottom = utils.pixel_to_index(bottom)
+            if globals.squares[index_left][index_top].owner != self or \
+               globals.squares[index_right][index_top].owner != self or \
+               globals.squares[index_left][index_bottom].owner != self or \
+               globals.squares[index_right][index_bottom].owner != self:
+                y -= dy
 
         #window borders
+        left = x - (globals.p_col_width / 2)
+        right = x + (globals.p_col_width / 2)
+        top = y - (globals.p_col_height / 2)
+        bottom = y + (globals.p_col_height / 2)
         if left < 0:
-            x = (globals.square_size / 2)
+            x -= dx
         elif right >= globals.width:
-            x = globals.width - (globals.square_size / 2) - 1
+            x -= dx
         if top < 0:
-            y = (globals.square_size / 2)
+            y -= dy
         elif bottom >= globals.height:
-            y = globals.height - (globals.square_size / 2) - 1
+            y -= dy
 
-        self.center = [
-            x,
-            y,
-        ]
+        return (x, y)
+
 
     def update_center(self):
         '''updates the center of the circle according to i and j'''

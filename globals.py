@@ -18,6 +18,8 @@ green = 0, 255, 0
 brown = 128, 64, 0
 
 # PLAYER
+p_col_width = 20
+p_col_height = 36
 p_images = [] #player, pose, direction, frame
 
 # BOMB

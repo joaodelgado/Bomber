@@ -57,30 +57,30 @@ class Game(object):
                 if explosion.i == self.p1.i and \
                    explosion.j == self.p1.j:
                     globals.winner = "player2"
-                    globals.player2_score += 1
                     self.gameover_timer = 1000
                     return
                 if explosion.i == self.p2.i and \
                    explosion.j == self.p2.j:
                     globals.winner = "player1"
-                    globals.player1_score += 1
                     self.gameover_timer = 1000
                     return
 
             # checks if a player is in a square that he doesn't own
             if self.p1.check_collision():
                 globals.winner = "player2"
-                globals.player2_score += 1
                 self.gameover_timer = 1000
                 return
             if self.p2.check_collision():
                 globals.winner = "player1"
-                globals.player1_score += 1
                 self.gameover_timer = 1000
                 return
         else:
             self.gameover_timer -= globals.clock.get_time()
             if self.gameover_timer < 0:
+                if globals.winner == "player1":
+                    globals.player1_score += 1
+                elif globals.winner == "player2":
+                    globals.player2_score += 1
                 globals.game_state_label = globals.GAME_OVER
 
     def render(self):

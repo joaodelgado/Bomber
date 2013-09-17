@@ -1,7 +1,7 @@
 #Bomber
 
 Bomber is a two player game where each player has to conquer territory by placing bombs, until the opponent is trapped.  
-Various powerups can appear when conquering territory, wich can enhance your bombs, speed and bomb capacity.
+Various power-ups can appear when conquering territory, which can enhance your bombs, speed and bomb capacity.
 
 ![screenshot](https://github.com/joaodelgado/bomber/raw/master/bomber.jpg "Game Screenshot")
 
@@ -25,6 +25,9 @@ To play just make sure you have [Python 2.7](http://www.python.org/) and [Pygame
         P to place a bomb
 
 ###Change Log
+* [Version 1.2.1](https://github.com/joaodelgado/Bomber/tree/v1.2.1)
+    + Corrected a bug where, sometimes, a victory was counting as two for the final score.
+
 * [Version 1.2](https://github.com/joaodelgado/Bomber/tree/v1.2)
 	+ Game over is now detected correctly, even when the player isn't in the center of the conquered square.
 
